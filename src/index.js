@@ -3,6 +3,9 @@ import cors from "cors";
 
 const app = express();
 
+import productsRoute from "../routes/products";
+import usersRoute from "../routes/users";
+
 
 app.use(cors({
     origin:"*",
