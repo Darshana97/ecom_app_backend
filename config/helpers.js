@@ -1,4 +1,5 @@
-const MySqli = require('mysqli');
+// const MySqli = require('mysqli');
+import MySqli from 'mysqli';
 
 let conn = new MySqli({
     host:'localhost',
