@@ -51,9 +51,11 @@ router.get("/", function (req, res) {
     .catch((err) => console.log(err));
 });
 
-router.get('/:proId', (req,res)=>{
+router.get("/:prodId", (req, res) => {
+  let productId = req.params.prodId;
+  console.log(productId);
 
-    database
+  database
     .table("products as p")
     .join([
       {
@@ -67,23 +69,19 @@ router.get('/:proId', (req,res)=>{
       "p.price",
       "p.quantity",
       "p.image",
+      "p.images",
       "p.id",
     ])
-    .slice(startValue, endValue)
-    .sort({ id: 0.1 })
-    .getAll()
-    .then((prods) => {
-      if (prods.length > 0) {
-        res.status(200).json({
-          count: prods.length,
-          products: prods,
-        });
+    .filter({ "p.id": productId })
+    .get()
+    .then((prod) => {
+      if (prod) {
+        res.status(200).json(prod);
       } else {
-        res.json({ message: "No products found" });
+        res.json({ message: `No product found with product id ${productId}` });
       }
     })
     .catch((err) => console.log(err));
-
 });
 
 module.exports = router;
