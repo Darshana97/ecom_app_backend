@@ -51,4 +51,39 @@ router.get("/", function (req, res) {
     .catch((err) => console.log(err));
 });
 
+router.get('/:proId', (req,res)=>{
+
+    database
+    .table("products as p")
+    .join([
+      {
+        table: "categories as c",
+        on: "c.id = p.cat_id",
+      },
+    ])
+    .withFields([
+      "c.title as category",
+      "p.title as name",
+      "p.price",
+      "p.quantity",
+      "p.image",
+      "p.id",
+    ])
+    .slice(startValue, endValue)
+    .sort({ id: 0.1 })
+    .getAll()
+    .then((prods) => {
+      if (prods.length > 0) {
+        res.status(200).json({
+          count: prods.length,
+          products: prods,
+        });
+      } else {
+        res.json({ message: "No products found" });
+      }
+    })
+    .catch((err) => console.log(err));
+
+});
+
 module.exports = router;
