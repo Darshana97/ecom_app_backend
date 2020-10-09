@@ -84,4 +84,8 @@ router.get("/:prodId", (req, res) => {
     .catch((err) => console.log(err));
 });
 
+router.get("/category/:catName", (req,res)=>{
+    
+})
+
 module.exports = router;
