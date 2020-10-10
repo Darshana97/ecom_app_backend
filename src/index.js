@@ -4,7 +4,7 @@ import cors from "cors";
 const app = express();
 
 import productsRoute from "../routes/products";
-import usersRoute from "../routes/users";
+import usersRoute from "../routes/orders";
 
 app.use("/api/products", productsRoute);
 app.use("/api/users", usersRoute);
