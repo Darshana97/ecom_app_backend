@@ -7,7 +7,7 @@ import productsRoute from "../routes/products";
 import usersRoute from "../routes/orders";
 
 app.use("/api/products", productsRoute);
-app.use("/api/users", usersRoute);
+app.use("/api/orders", usersRoute);
 
 app.use(
   cors({
