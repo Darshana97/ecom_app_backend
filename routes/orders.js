@@ -9,8 +9,24 @@ const { database } = require("../config/helpers");
 
 // const router = Router();
 
-router.get("/", function (req, res) {
-  
+router.get("/", (req, res) => {
+  database.table("orders_details as od").join([
+    {
+      table: "orders as o",
+      on: "o.id = od.order_id",
+    },
+    {
+        table: "products as p",
+        on: "p.id = od.product_id",
+      },
+      {
+        table: "users as u",
+        on: "u.id = od.user_id",
+      },
+  ])
+  .withFields(['o.id', 'p.title as name', 'p.description', 'p.price','u.username'])
+  .getAll()
+  .then()
 });
 
 module.exports = router;
