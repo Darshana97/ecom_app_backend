@@ -45,4 +45,44 @@ router.get("/", (req, res) => {
     .catch((err) => console.log(err));
 });
 
+router.get("/:id", (req, res) => {
+
+    const orderId = req.params.id;
+
+  database
+    .table("orders_details as od")
+    .join([
+      {
+        table: "orders as o",
+        on: "o.id = od.order_id",
+      },
+      {
+        table: "products as p",
+        on: "p.id = od.product_id",
+      },
+      {
+        table: "users as u",
+        on: "u.id = o.user_id",
+      },
+    ])
+    
+    .withFields([
+      "o.id",
+      "p.title as name",
+      "p.description",
+      "p.price",
+      "u.username",
+    ])
+    .filter({'o.id':orderId})
+    .getAll()
+    .then((orders) => {
+      if (orders.length > 0) {
+        res.status(200).json(orders);
+      } else {
+        res.json({ message:  `No orders found with orderId ${orderId} ` });
+      }
+    })
+    .catch((err) => console.log(err));
+});
+
 module.exports = router;
