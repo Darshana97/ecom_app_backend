@@ -115,11 +115,48 @@ router.post("/new", (req, res) => {
             } else {
               data.quantity = 0;
             }
+
+            database
+              .table("orders_details")
+              .insert({
+                order_id: newOrderId,
+                product_id: p.id,
+                quantity: inCart,
+              })
+              .then((newId) => {
+                database
+                  .table("products")
+                  .filter({ id: p.id })
+                  .update({
+                    quantity: data.quantity,
+                  })
+                  .then((successNum) => {})
+                  .catch((err) => console.log(err));
+              })
+              .catch((err) => console.log(err));
+          });
+        } else {
+          res.json({
+            message: "new order failed while adding order details",
+            success: false,
           });
         }
+        res.json({
+          message: `Order successfully placed with order id ${newOrderId}`,
+          success: true,
+          order_id: newOrderId,
+          products: products,
+        });
       })
       .catch((err) => console.log(err));
+  } else {
+    res.json({
+      message: "New order failed",
+      success: false,
+    });
   }
 });
+
+// router.post
 
 module.exports = router;
