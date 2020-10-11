@@ -103,6 +103,18 @@ router.post("/new", (req, res) => {
               .filter({ id: p.id })
               .withFields(["quantity"])
               .get();
+
+            let inCart = p.incart;
+
+            if (data.quantity > 0) {
+              data.quantity = data.quantity - inCart;
+
+              if (data.quantity < 0) {
+                data.quantity = 0;
+              }
+            } else {
+              data.quantity = 0;
+            }
           });
         }
       })
