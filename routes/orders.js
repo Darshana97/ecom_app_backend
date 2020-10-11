@@ -46,8 +46,7 @@ router.get("/", (req, res) => {
 });
 
 router.get("/:id", (req, res) => {
-
-    const orderId = req.params.id;
+  const orderId = req.params.id;
 
   database
     .table("orders_details as od")
@@ -65,7 +64,7 @@ router.get("/:id", (req, res) => {
         on: "u.id = o.user_id",
       },
     ])
-    
+
     .withFields([
       "o.id",
       "p.title as name",
@@ -73,16 +72,18 @@ router.get("/:id", (req, res) => {
       "p.price",
       "u.username",
     ])
-    .filter({'o.id':orderId})
+    .filter({ "o.id": orderId })
     .getAll()
     .then((orders) => {
       if (orders.length > 0) {
         res.status(200).json(orders);
       } else {
-        res.json({ message:  `No orders found with orderId ${orderId} ` });
+        res.json({ message: `No orders found with orderId ${orderId} ` });
       }
     })
     .catch((err) => console.log(err));
 });
+
+router.post("/new", (req, res) => {});
 
 module.exports = router;
