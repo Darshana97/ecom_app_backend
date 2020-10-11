@@ -84,6 +84,30 @@ router.get("/:id", (req, res) => {
     .catch((err) => console.log(err));
 });
 
-router.post("/new", (req, res) => {});
+router.post("/new", (req, res) => {
+  let { userId, products } = req.body;
+
+  //   console.log(userId, products);
+
+  if (userId != null && userId > 0 && !isNaN(userId)) {
+    database
+      .table("orders")
+      .insert({
+        user_id: userId,
+      })
+      .then((newOrderId) => {
+        if (newOrderId > 0) {
+          products.forEach(async (p) => {
+            let data = await database
+              .table("products")
+              .filter({ id: p.id })
+              .withFields(["quantity"])
+              .get();
+          });
+        }
+      })
+      .catch((err) => console.log(err));
+  }
+});
 
 module.exports = router;
