@@ -157,6 +157,10 @@ router.post("/new", (req, res) => {
   }
 });
 
-// router.post
+router.post("/payment", (req, res) => {
+  setTimeout(() => {
+    res.status(200).json({ success: true });
+  }, 3000);
+});
 
 module.exports = router;
