@@ -26,6 +26,7 @@ router.get("/", (req, res) => {
         on: "u.id = o.user_id",
       },
     ])
+    .sort({ id: -1 })
     .withFields([
       "o.id",
       "p.title as name",
