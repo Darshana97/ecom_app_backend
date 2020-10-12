@@ -84,10 +84,11 @@ router.get("/:id", (req, res) => {
     .catch((err) => console.log(err));
 });
 
-router.post("/new", (req, res) => {
+router.post("/new", async (req, res) => {
+    console.log(req.body);
   let { userId, products } = req.body;
-
-  //   console.log(userId, products);
+ 
+  // console.log(userId, products);
 
   if (userId != null && userId > 0 && !isNaN(userId)) {
     database

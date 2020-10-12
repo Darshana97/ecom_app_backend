@@ -6,6 +6,8 @@ const app = express();
 import productsRoute from "../routes/products";
 import usersRoute from "../routes/orders";
 
+app.use(express.json({ extends: true }));
+
 app.use("/api/products", productsRoute);
 app.use("/api/orders", usersRoute);
 
