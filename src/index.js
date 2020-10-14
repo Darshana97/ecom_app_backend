@@ -8,9 +8,6 @@ import usersRoute from "../routes/orders";
 
 app.use(express.json({ extends: true }));
 
-app.use("/api/products", productsRoute);
-app.use("/api/orders", usersRoute);
-
 app.use(
   cors({
     origin: "*",
@@ -19,6 +16,13 @@ app.use(
       "Content-Type, Authorization, Origin, X-Requested-With, Accept",
   })
 );
+
+app.use("/api/products", productsRoute);
+app.use("/api/orders", usersRoute);
+
+
+
+
 
 const PORT = process.env.P | 3000;
 
